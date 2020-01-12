@@ -4,7 +4,12 @@ class MessagesController < ApplicationController
   def create
     message = current_user.messages.build(message_params)#like create hit the db
     if message.save
-      redirect_to root_path
+      #redirect_to root_path
+
+      #any thing you broadcast will caught by coofee script function recieved#data
+      ActionCable.server.broadcast "chatroom_channel",foo: message.body
+
+      #ActionCable.server.broadcast "chatroom_channel",mod_message: message_render(message)
     end
   end
 
