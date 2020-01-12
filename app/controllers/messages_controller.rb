@@ -7,9 +7,9 @@ class MessagesController < ApplicationController
       #redirect_to root_path
 
       #any thing you broadcast will caught by coofee script function recieved#data
-      ActionCable.server.broadcast "chatroom_channel",foo: message.body
+      #ActionCable.server.broadcast "chatroom_channel",foo: message.body
 
-      #ActionCable.server.broadcast "chatroom_channel",mod_message: message_render(message)
+      ActionCable.server.broadcast "chatroom_channel",mod_message: message_render(message)
     end
   end
 
@@ -19,8 +19,9 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:body)
   end
 
-  # def message_render(message)
-  #   render(partial: 'message', locals: {message: message})
-  # end
+  def message_render(message)
+    #render partial from controller / my partial need message inside it see messages/message.html.erb
+    render(partial: 'message', locals: {message: message})
+  end
 
 end
